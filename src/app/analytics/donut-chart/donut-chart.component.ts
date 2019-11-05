@@ -65,13 +65,13 @@ export class DonutChartComponent implements OnInit {
    */
   ngOnChanges() {
     if (this.doughnutChartDataInput) {
+      let CountTo: any = 0;
       if (this.title === 'Conversion Rate') {
-
         this.numerator = this.doughnutChartDataInput.updatedCompliantICT;
         this.denominator = this.doughnutChartDataInput.uncompliance;
         this.doughnutChartData = [this.doughnutChartDataInput.updatedCompliantICT, this.doughnutChartDataInput.uncompliance];
         this.percentage = this.doughnutChartDataInput.uncompliance === 0 ? 0 : Math.round(this.doughnutChartDataInput.updatedCompliantICT / this.doughnutChartDataInput.uncompliance * 100);
-        const CountTo = this.percentage;
+        CountTo = this.percentage;
         this.id = 'ConversionRate'
         this.note = 'non-compliant ICT solicitations became compliant after they were updated on FedBizOpps.gov';
         this.tableHTML = this.makeDataTable([[this.doughnutChartData[0], this.percentage + '%', this.doughnutChartData[1]]],
@@ -83,17 +83,19 @@ export class DonutChartComponent implements OnInit {
         this.denominator = this.doughnutChartDataInput.determinedICT;
         this.doughnutChartData = [this.numerator, this.doughnutChartDataInput.determinedICT - this.doughnutChartDataInput.compliance];
         this.percentage = this.doughnutChartDataInput.determinedICT === 0 ? 0 : Math.round(this.doughnutChartDataInput.compliance / this.doughnutChartDataInput.determinedICT * 100);
-        const CountTo = this.percentage;
+        CountTo = this.percentage;
         this.id = 'ComplianceRate'
         this.note = 'ICT machine readable solicitations scanned by SRT are Section 508 compliant solicitations';
         this.tableHTML = this.makeDataTable([[this.doughnutChartData[0], this.percentage + '%', this.doughnutChartData[1]]],
-          ['Compliant Machine Readable Solicitations', 'Percent Compliant Machine Readable Solicitations', 'Total Machine Readable Solicitations'],
+          ['Compliant Machine Readable Solicitations',
+                   'Percent Compliant Machine Readable Solicitations',
+                   'Total Machine Readable Solicitations'],
           'Preliminary Compliance Rate Donut Chart Data Table');
       }
 
-      $("#" + this.id).each(function() {
+      $('#' + this.id).each(function() {
         $(this)
-        .prop("Counter", 0)
+        .prop('Counter', 0)
           .animate(
             {
               Counter: '' + CountTo
