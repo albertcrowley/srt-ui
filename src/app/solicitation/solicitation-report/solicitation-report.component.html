@@ -20,11 +20,11 @@
 <div *ngIf="solicitations">
     <div class="row nopadding">
         <div style="padding: 20px" class="clearfix">
-            <div class="srt-page-title srt-blue" style="padding-bottom: 5px;"  role="heading" aria-level="1">Solicitation Review Results for Section 508 Requirements</div>
+            <h1 class="srt-page-title srt-blue" style="padding-bottom: 5px;"  role="heading" aria-level="1">Solicitation Review Results for Section 508 Requirements</h1>
 
             <div class="solic-table">
                     <div class="solic-keyword">
-                    <label id="ksearch-label" for="ksearch" class="solic-keyword">Keyword Search:
+                    <label id="ksearch-label" for="ksearch" class="solic-keyword">Search all table content:
                             <!--<span class="input-invalid" *ngIf="errorMessage && (myForm.value.email == null || myForm.value.email == '')">Please fill in requred field</span>-->
                     </label>
                     </div>
@@ -36,7 +36,7 @@
                                 <span class=" glyphicon glyphicon-search"></span>
                             </button>
                         </span>
-                        <input aria-labelledby="ksearch-label" id="ksearch" #gb type="text" class="search-query form-control" placeholder="Global Filter" />
+                        <input aria-labelledby="ksearch-label" id="ksearch" #gb type="text" class="search-query form-control" placeholder="search string" />
                     </div>
                 </div>
                 <div class="solic-export"><div style="padding: 0 0 0 15px;">Export As:</div></div>
