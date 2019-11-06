@@ -84,8 +84,8 @@
         <div class="col-md-12 nopadding clearfix analytic-section2-container" tabindex="0" role="region" aria-labelledby="region4" >
                 <h2 id="region4" style="display:none">histogram of top 10 compliant angencies</h2>
                 <app-top-agencies-percentage
-                    *ngIf="isGovernomentWide"
-                    [isGovernomentWide]="isGovernomentWide"
+                    *ngIf="isGovernmentWide"
+                    [isGovernomentWide]="isGovernmentWide"
                     [TopAgenciesChart]="TopAgenciesChart"
                     [selectedGovernment]="selectedGovernment"
                     [barTitle]="barTitle"
@@ -94,7 +94,7 @@
                     [fromPeriod]="fromPeriod"
                     [xAxis]="xAxis"></app-top-agencies-percentage>
                 <app-line-charts
-                     *ngIf="!isGovernomentWide"
+                     *ngIf="!isGovernmentWide"
                      [TopAgenciesChart]="TopAgenciesChart"
                      [selectedGovernment]="selectedGovernment"
                      [selectedPeriod]="selectedPeriod"
