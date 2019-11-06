@@ -19,8 +19,8 @@
   <nav class="us-navbar navbar-default">
 
         <div class="container-fluid" style="padding: 0;">
-            <div class="navbar-header nopadding" style="height: 60px" aria-hidden="true">
-                <a class="navbar-left" [routerLink]="['/home']"><img id="srtlogo" alt='SRT Logo' src="../../assets/srtlogo.png"></a>
+            <div class="navbar-header nopadding" style="height: 60px" >
+                <a class="navbar-left" [routerLink]="['/home']" aria-label="SRT Home Page"><img id="srtlogo" alt='SRT Logo' src="../../assets/srtlogo.png"></a>
             </div>
 
         <div class="collapse navbar-collapse" id="navbar" style="padding: 0;" role="navigation" aria-label="main navigation" >
@@ -35,12 +35,10 @@
                      <li data-toggle="tab" *ngIf="isGSAAdmin" [ngClass]="{'active': GetHash('feedback/report')}" id="7" (click)="menuClick('/solicitation/feedback');"><a [routerLink]="['/solicitation/feedback']">Feedback</a></li>
                 </ul>
 
-                <div class=" gsa_logo" aria-hidden="true">
-                    <a class="logo_li">
+                <div class="gsa_logo" aria-label="GSA Logo" aria-hidden="true">
                     <div class='span-logo' >
                         <img alt="GSA Logo" src='../../assets/gsa-logo.png'/>
                     </div>
-                    </a>
                 </div>
                 <ul *ngIf="isLogin" id="gsaDropdown" class="nav navbar-nav" style="float: right;" >
                     <li class="dropdown">

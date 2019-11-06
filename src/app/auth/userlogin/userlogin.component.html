@@ -8,9 +8,8 @@
     <button class="srt-button"
             style="float:none; display:inline; margin-top:3em;"
             id="login"
+            aria-label="Login with MAX"
             onClick=" (function() {
-            console.log('starting click');
-
                         var client_host = window.location.hostname
                         var server_host = '';
                         if (client_host === 'localhost') { server_host = 'localhost:3000' }
