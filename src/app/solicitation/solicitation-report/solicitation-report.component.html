@@ -60,7 +60,7 @@
             [responsive]="true"
             [stacked]="stacked">
 
-        <p-column field="solNum"  header="Solicitation ID" [sortable]="true" [filter]="false" filterPlaceholder="Search" [style]="{'width': '170px'}" ></p-column>
+        <p-column tabindex="0" aria-lable="Solicitation ID sortable" field="solNum"  header="Solicitation ID" [sortable]="true" [filter]="false" filterPlaceholder="Search" [style]="{'width': '170px'}" ></p-column>
         <p-column field="title" header="Solicitation Title" [sortable]="true" [filter]="false" filterPlaceholder="Search">
             <ng-template let-sol="rowData" pTemplate="body">
                 <a href="{{sol.url}}" target="_blank">{{sol.title}}</a>
@@ -83,7 +83,7 @@
 
             <ng-template let-sol="rowData" pTemplate="body">
 
-              <span [ngStyle]="{'color' : sol.predictions.value }">
+              <span class="{{'result-' + sol.predictions.value}}" [ngStyle]="{'color' : sol.predictions.value }">
                   <button class="button" (click)="selectSol(sol)" onclick="$('#test').focus()" style="border: none; text-align: left; padding: 0;">
                       <i class="fa fa-exclamation-triangle" style="padding-right: 5px;" *ngIf="sol.predictions.value == 'red'"></i>
                       <span style="text-decoration: underline;">{{sol.reviewRec}}</span>
