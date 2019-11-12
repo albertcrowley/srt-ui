@@ -42,6 +42,17 @@ export class SolicitationReportComponent implements OnInit {
     reviewRec: '',
   };
 
+  columns = [
+    { field: 'solNum', title: 'Solicitation ID'},
+    { field: 'title', title: 'Solicitation Title'},
+    { field: 'noticeType', title: 'Notice Type'},
+    { field: 'date', title: 'Date Posted on FedBizOps'},
+    { field: 'reviewRec', title: 'SRT Review Result'},
+    { field: 'actionStatus', title: 'Action Status'},
+    { field: 'actionDate', title: 'Latest Action Date'},
+    { field: 'agency', title: 'Agency'},
+    { field: 'office', title: 'Office'}
+  ];
 
   /**
    * constructor

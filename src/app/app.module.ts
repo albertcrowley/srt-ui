@@ -17,7 +17,8 @@ import { TokenService } from './shared/services/token.service';
 
 
 import { SolicitationModule } from './solicitation/solicitation.module';
-import { DataTableModule, SharedModule, ButtonModule, DropdownModule, CalendarModule} from 'primeng/primeng';
+import { SharedModule, ButtonModule, DropdownModule, CalendarModule} from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'ng2-tooltip';
 import { Ng2CompleterModule } from 'ng2-completer';
 
@@ -72,7 +73,7 @@ import {AdminGuard} from './admin-guard.service';
     HomeModule,
     HelpModule,
     UserModule,
-    DataTableModule,
+    TableModule,
     SharedModule,
     ButtonModule,
     DropdownModule,
