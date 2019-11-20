@@ -54,17 +54,24 @@
 
 
   <p-table styleClass="pDataTable"
+           [value]="solicitations"
+           [lazy] = "true"
+           [loading]="loading"
+           (onLazyLoad)="loadSolicitationsLazy($event)"
+           [totalRecords]="totalRecordCount"
                [value]="solicitations"
                [rows]="15"
                [paginator]="true"
                [rowsPerPageOptions]="[15, 25, 35, 45]"
-           [pageLinks]="4"
-           [responsive]="true">
+               [pageLinks]="4"
+               [responsive]="true">
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of columns" [pSortableColumn]="col.field">
           {{col.title}}
-          <p-sortIcon [field]="col.field"
+
+          <p-sortIcon *ngIf="col.field !== undefined"
+                      [field]="col.field"
                       ariaLabel="Activate to sort"
                       ariaLabelDesc="Activate to sort in descending order"
                       ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
