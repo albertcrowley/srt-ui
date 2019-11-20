@@ -1,10 +1,12 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {SolicitationService} from '../solicitation.service';
-import {SelectItem} from 'primeng/primeng';
+import {LazyLoadEvent, SelectItem} from 'primeng/primeng';
 import * as $ from 'jquery';
 import {Title} from '@angular/platform-browser';
 import {BaseComponent} from '../../base.component';
+import {SolicitationResult} from '../solicitation.service';
+import {SolicitationResult} from '../solicitation.service';
 
 
 @Component({
@@ -15,13 +17,17 @@ import {BaseComponent} from '../../base.component';
 })
 export class SolicitationReportComponent extends BaseComponent implements OnInit {
 
+
+
   /* ATTRIBUTES */
 
-  solicitations: any[];
+  solicitations: Array<any>;
   solicitation = {};
   ict: SelectItem[] = [];
   solType: SelectItem[] = [];
   revResult: SelectItem[] = [];
+  loading: boolean;
+  totalRecordCount = 0;
 
 
   stacked: Boolean = false;
@@ -42,19 +48,21 @@ export class SolicitationReportComponent extends BaseComponent implements OnInit
     numDocs: '',
     reviewStatus: '',
     reviewRec: '',
+    rows: 15
   };
 
   columns = [
     { field: 'solNum', title: 'Solicitation ID'},
-    { field: 'title', title: 'Solicitation Title'},
+    { field: undefined, title: 'Solicitation Title'},
     { field: 'noticeType', title: 'Notice Type'},
     { field: 'date', title: 'Date Posted on FedBizOps'},
     { field: 'reviewRec', title: 'SRT Review Result'},
-    { field: 'actionStatus', title: 'Action Status'},
-    { field: 'actionDate', title: 'Latest Action Date'},
+    { field: undefined, title: 'Action Status'},
+    { field: undefined, title: 'Latest Action Date'},
     { field: 'agency', title: 'Agency'},
-    { field: 'office', title: 'Office'}
+    { field: undefined, title: 'Office'}
   ];
+
 
   /**
    * constructor
@@ -76,36 +84,28 @@ export class SolicitationReportComponent extends BaseComponent implements OnInit
    */
   ngOnInit() {
     super.ngOnInit();
-    this.stacked = window.matchMedia('(max-width: 992px)').matches;
 
+
+    this.stacked = window.matchMedia('(max-width: 992px)').matches;
+    this.loading = true;
     this.initFilterParams();
     this.solicitationService.getFilteredSolicitations(this.filterParams)
       .subscribe(
         solicitations => {
-          this.solicitations = solicitations;
-          this.solicitationService.solicitations = solicitations;
-          this.solicitations = this.solicitations.sort(
-            function (a, b) {
-              const aDate = new Date(a.date);
-              const bDate = new Date(b.date);
-              if (aDate > bDate) {
-                return -1;
-              } else if (aDate < bDate) {
-                return 1;
-              } else {
-                return 0;
-              }
-            }
-          );
+          this.totalRecordCount = solicitations.totalCount;
+          this.solicitations = solicitations.predictions;
+          this.solicitationService.solicitations = solicitations.predictions;
           this.dateScan = this.solicitations[0].date;
           $('.pDataTable').show();
           // sorting
           //  this.solicitations = this.sortByReviewResult(this.solicitations);
 
           this.getNoticeTypes(this.solicitations);
+          this.loading = false;
         },
         err => {
           console.log(err);
+          this.loading = false;
         });
 
     this.ict.push({label: 'All', value: null});
@@ -116,6 +116,32 @@ export class SolicitationReportComponent extends BaseComponent implements OnInit
     this.revResult.push({label: 'Compliant', value: 'Compliant'});
     this.revResult.push({label: 'Non-compliant (Action Required)', value: 'Non-compliant (Action Required)'});
     this.revResult.push({label: 'Not Applicable', value: 'Not Applicable'});
+
+  }
+
+  loadSolicitationsLazy(event: LazyLoadEvent) {
+    this.loading = true;
+    console.log ('start . ...............');
+    console.log(event);
+
+    this.solicitationService.getFilteredSolicitations(event)
+      .subscribe(
+        solicitations => {
+          console.log ('loading again . ...............');
+          console.log (event)
+          this.solicitations = solicitations.predictions
+          this.solicitationService.solicitations = solicitations.predictions;
+          this.dateScan = this.solicitations[0].date;
+          $('.pDataTable').show();
+          // sorting
+          //  this.solicitations = this.sortByReviewResult(this.solicitations);
+
+          this.getNoticeTypes(this.solicitations);
+          this.loading = false;
+        },
+        err => {
+          console.log(err);
+        });
 
   }
 
