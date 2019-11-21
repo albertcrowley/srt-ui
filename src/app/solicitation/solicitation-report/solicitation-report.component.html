@@ -36,7 +36,12 @@
                                 <span class=" glyphicon glyphicon-search"></span>
                             </button>
                         </span>
-                        <input id="ksearch" #gb type="text" class="search-query form-control" placeholder="Global Filter" />
+                        <input id="ksearch" #gb
+                               type="text"
+                               class="search-query form-control"
+                               placeholder="Global Filter"
+                               (input)="gb.filterGlobal($event.target.value, 'contains')"
+                        />
                     </div>
                 </div>
                 <div class="solic-export"><div style="padding: 0 0 0 15px;">Export As:</div></div>
@@ -53,7 +58,7 @@
         </div>
 
 
-  <p-table styleClass="pDataTable"
+  <p-table #gb styleClass="pDataTable"
            [value]="solicitations"
            [lazy] = "true"
            [loading]="loading"
