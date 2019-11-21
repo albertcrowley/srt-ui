@@ -131,7 +131,7 @@ export class SolicitationReportComponent extends BaseComponent implements OnInit
           console.log (event)
           this.solicitations = solicitations.predictions
           this.solicitationService.solicitations = solicitations.predictions;
-          this.dateScan = this.solicitations[0].date;
+          this.dateScan = this.solicitations[0] && this.solicitations[0].date;
           $('.pDataTable').show();
           // sorting
           //  this.solicitations = this.sortByReviewResult(this.solicitations);
