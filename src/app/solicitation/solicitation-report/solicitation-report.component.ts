@@ -5,8 +5,6 @@ import {LazyLoadEvent, SelectItem} from 'primeng/primeng';
 import * as $ from 'jquery';
 import {Title} from '@angular/platform-browser';
 import {BaseComponent} from '../../base.component';
-import {SolicitationResult} from '../solicitation.service';
-import {SolicitationResult} from '../solicitation.service';
 
 
 @Component({
