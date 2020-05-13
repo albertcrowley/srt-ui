@@ -11,7 +11,7 @@ export class AdminReportsComponent implements OnInit {
   loginData: any;
   chartOptions: any;
   userData: any;
-  userChartOptions: any;
+  userChartCols: any;
 
   constructor(private loginReportService: LoginReportService) {
 
@@ -25,6 +25,14 @@ export class AdminReportsComponent implements OnInit {
       }
     };
 
+
+    this.userChartCols = [
+      { field: 'email', header: 'Email Address'},
+      { field: 'lastLogin', header: 'Last Login'},
+      { field: 'sevenDays', header: 'Logins Last 7 Days'},
+      { field: 'thirtyDays', header: 'Logins Last 30 Days'},
+      { field: 'totalLogins', header: 'Total Logins'}
+    ];
 
     loginReportService.getLoginReport()
       .subscribe(
@@ -68,7 +76,7 @@ export class AdminReportsComponent implements OnInit {
         if (! userAccumulator[email]) {
           userAccumulator[email] = { email: email, totalLogins: 0, sevenDays: 0, thirtyDays: 0, lastLogin: date};
         }
-        userAccumulator[email].totalLogins += 1;
+        userAccumulator[email].totalLogins += data[date][email];
 
         // check if this is a more recent login
         if (new Date(userAccumulator[email].lastLogin) < new Date(date)) {
@@ -82,11 +90,11 @@ export class AdminReportsComponent implements OnInit {
         const daysAgo = (today.getTime() - dateLogin.getTime()) / msInDay;
 
         if (daysAgo < 7) {
-          userAccumulator[email].sevenDays += 1;
+          userAccumulator[email].sevenDays += data[date][email];
         }
 
         if (daysAgo < 30) {
-          userAccumulator[email].thirtyDays += 1;
+          userAccumulator[email].thirtyDays += data[date][email];
         }
 
       });

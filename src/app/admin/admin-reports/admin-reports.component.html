@@ -4,23 +4,20 @@
   <p-chart type="bar" [data]="loginData" [options]="chartOptions" ></p-chart>
 
   <h1 class="srt-blue analytic-big-title">User Login Report</h1>
-  <p-table [value]="userData">
-    <ng-template pTemplate="header">
+  <p-table [value]="userData" [columns]="userChartCols">
+    <ng-template pTemplate="header" let-columns>
       <tr>
-        <th>Email Address</th>
-        <th>Last Login</th>
-        <th>Logins Last 7 Days</th>
-        <th>Logins Last 30 Days</th>
-        <th>Total Logins</th>
+        <th *ngFor="let col of userChartCols" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-user>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
-        <td>{{user.email}}</td>
-        <td>{{user.lastLogin}}</td>
-        <td>{{user.sevenDays}}</td>
-        <td>{{user.thirtyDays}}</td>
-        <td>{{user.totalLogins}}</td>
+        <td *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
       </tr>
     </ng-template>
 
