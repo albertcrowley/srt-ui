@@ -1,7 +1,30 @@
 <div>
 
   <h1 class="srt-blue analytic-big-title">Logins Last 30 Days</h1>
-
   <p-chart type="bar" [data]="loginData" [options]="chartOptions" ></p-chart>
+
+  <h1 class="srt-blue analytic-big-title">User Login Report</h1>
+  <p-table [value]="userData">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Email Address</th>
+        <th>Last Login</th>
+        <th>Logins Last 7 Days</th>
+        <th>Logins Last 30 Days</th>
+        <th>Total Logins</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{user.email}}</td>
+        <td>{{user.lastLogin}}</td>
+        <td>{{user.sevenDays}}</td>
+        <td>{{user.thirtyDays}}</td>
+        <td>{{user.totalLogins}}</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
 
 </div>

@@ -30,7 +30,6 @@ export class LoginReportService {
    * }
    */
   public getLoginReport() {
-    console.log('getLoginReport()');
     return this.http.get<any[]>(this.loginReportURL);
   }
 }
