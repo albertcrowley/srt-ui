@@ -18,6 +18,7 @@ export class AnalyticsService {
 
   private AnalyticUrl = environment.SERVER_URL + '/Analytics';
   private AgencyListUrl = environment.SERVER_URL + '/AgencyList';
+  private CSVDownloadedSolicitationsReportUrl = environment.SERVER_URL + '/reports/solicitationDownloads?format=csv';
 
   /* CONSTRUCTOR */
 
@@ -47,6 +48,19 @@ export class AnalyticsService {
    */
   GetAgencyList() {
     return this.http.get<any>(this.AgencyListUrl)
+      .catch((error: any) => {
+        console.log(error);
+        return observableThrowError(error.json().error || 'Server Error');
+      });
+  }
+
+  /**
+   * Get downloaded solicitations report
+   */
+  GetDownloadedSolicitationsReport() {
+    return this.http.get<any>
+    (this.CSVDownloadedSolicitationsReportUrl,
+      { 'responseType': 'blob'})
       .catch((error: any) => {
         console.log(error);
         return observableThrowError(error.json().error || 'Server Error');

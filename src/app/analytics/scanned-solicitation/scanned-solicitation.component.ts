@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, Directive } from '@angular/core';
 
 import { BaseChartDirective } from 'ng2-charts';
 import { Color } from 'ng2-charts';
+import {saveAs} from 'file-saver';
+import { AnalyticsService } from '../services/analytics.service';
 
 
 import * as _ from 'underscore';
@@ -30,7 +32,6 @@ export class ScannedSolicitationComponent implements OnInit {
 
   public barChartLabels: String[] = [];
   public barChartType: String = 'bar';
-  //public barChartLegend: Boolean = true;
   public barChartData: any[] = [];
   public tabularData = '';
 
@@ -88,6 +89,7 @@ export class ScannedSolicitationComponent implements OnInit {
    * constructor
    */
   constructor(
+    private AnalyticsService: AnalyticsService,
   ) {}
 
   /**
@@ -112,7 +114,7 @@ export class ScannedSolicitationComponent implements OnInit {
     return [year, month, day].join('');
   }
 
-  filterRecentDates(fromDate: Date, inArray: Array) {
+  filterRecentDates(fromDate: Date, inArray: Array<any>) {
     const fromDateYYYYMMDD = this.formatDate(this.fromPeriod);
     const result = {};
     for (const key of Object.keys(inArray) ){
@@ -124,9 +126,9 @@ export class ScannedSolicitationComponent implements OnInit {
   }
 
   // strips of the YYYY from an Object with keys of YYYYMMDD
-  stripYears(inArray: Array) {
+  stripYears(inArray: Object) {
     const result = {};
-    for (const key: string of Object.keys(inArray) ) {
+    for (const key of Object.keys(inArray) ) {
       const newKey = key.substr(4);
       result[newKey] = inArray[key];
     }
@@ -140,10 +142,10 @@ export class ScannedSolicitationComponent implements OnInit {
     if (this.ScannedSolicitationChart && !this.hasValue) {
         this.barChartLabels = [];
         let i = 0;
-        let recentNewSolicitationsByDate = this.stripYears(
+        const recentNewSolicitationsByDate = this.stripYears(
           this.filterRecentDates(this.fromPeriod, this.solStats.newSolicitationsByDate)
         );
-        let recentUpdatedSolicitationsByDate = this.stripYears(
+        const recentUpdatedSolicitationsByDate = this.stripYears(
           this.filterRecentDates(this.fromPeriod, this.solStats.updatedSolicitationsByDate)
         );
         for (const d = this.fromPeriod; d <= this.toPeriod && i < 32; d.setDate(d.getDate() + 1)){
@@ -204,5 +206,16 @@ export class ScannedSolicitationComponent implements OnInit {
       setTimeout(() => {
           this.baseChart.refresh();
       }, 10);
+  }
+
+  downloadCSV() {
+    this.AnalyticsService.GetDownloadedSolicitationsReport()
+      .subscribe(
+        data => {
+          saveAs(data, 'downloaded_solicitations_report.csv');
+        },
+        err => {
+        }
+      );
   }
 }
