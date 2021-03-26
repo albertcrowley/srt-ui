@@ -209,10 +209,12 @@ export class ScannedSolicitationComponent implements OnInit {
   }
 
   downloadCSV() {
+    document.body.style.cursor = 'wait';
     this.AnalyticsService.GetDownloadedSolicitationsReport()
       .subscribe(
         data => {
           saveAs(data, 'downloaded_solicitations_report.csv');
+          document.body.style.cursor = 'default';
         },
         err => {
         }

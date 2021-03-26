@@ -60,7 +60,7 @@ export class AnalyticsService {
   GetDownloadedSolicitationsReport() {
     return this.http.get<any>
     (this.CSVDownloadedSolicitationsReportUrl,
-      { 'responseType': 'blob'})
+      { responseType: 'blob' as 'json'})
       .catch((error: any) => {
         console.log(error);
         return observableThrowError(error.json().error || 'Server Error');
